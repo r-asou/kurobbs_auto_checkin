@@ -149,7 +149,10 @@ def main():
     token = os.getenv("TOKEN")
     debug = os.getenv("DEBUG", False)
     configure_logger(debug=debug)
-
+    if not token:
+        logger.error("环境变量 TOKEN 未设置或为空。请确保设置有效的访问令牌。")
+        send_notification("环境变量 TOKEN 未设置或为空。请确保设置有效的访问令牌。")
+        sys.exit(1)
     try:
         kurobbs = KurobbsClient(token)
         kurobbs.start()
