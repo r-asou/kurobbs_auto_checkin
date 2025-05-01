@@ -147,12 +147,15 @@ def configure_logger(debug: bool = False):
 def main():
     """Main function to handle command-line arguments and start the sign-in process."""
     token = os.getenv("TOKEN")
-    debug = os.getenv("DEBUG", False)
+    debug = os.getenv("DEBUG", True)
     configure_logger(debug=debug)
     if not token:
         logger.error("环境变量 TOKEN 未设置或为空。请确保设置有效的访问令牌。")
         send_notification("环境变量 TOKEN 未设置或为空。请确保设置有效的访问令牌。")
         sys.exit(1)
+    if debug:
+       
+        logger.debug(f"Using token: {token}")
     try:
         kurobbs = KurobbsClient(token)
         kurobbs.start()
